@@ -1,0 +1,54 @@
+.wrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+
+}
+.list{
+    display: flex;    
+    text-decoration: none;
+}
+
+
+
+.link{
+    font-size: 16px;
+    line-height: 120%;
+    color: #1D1F22;
+    text-decoration: none;
+    padding: 4px 16px 32px 16px;
+    
+
+}
+
+.activeLink{
+    font-weight: 600;
+    color: #5ECE7B;
+    text-decoration: none;
+    border-bottom: 2px solid #5ECE7B;
+}
+
+.logo{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.secondaryNav{
+    display: flex;
+    align-items: center;
+}
+
+.currency{
+    font-size: 18px;
+    font-weight: 500;
+    margin: 0;
+}
+
+.cartIcon{
+    position: relative;
+    top: 2px;
+    margin-left: 22px;
+
+}
