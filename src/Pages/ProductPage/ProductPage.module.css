@@ -1,0 +1,104 @@
+.wrapper {
+  padding: 80px 110px 80px 110px;
+  display: flex;
+}
+
+.imagesSection {
+  display: flex;
+}
+
+.imagesListItem {
+  width: 79px;
+}
+
+.imagesListItem:not(:last-child) {
+  margin-bottom: 40px;
+}
+
+.selectImage {
+  display: block;
+  width: 79px;
+  height: 80px;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.selectImage:hover {
+  transform: scale(1.1);
+}
+
+.selectedImage {
+  width: 610px;
+  height: 511px;
+  object-fit: contain;
+  margin-left: 40px;
+  margin-right: 100px;
+}
+
+.title {
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 27px;
+  margin-bottom: 40px;
+}
+
+.attributes{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.attributesTitle {
+font-family: Roboto Condensed;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 18px;
+  margin-bottom: 8px;
+}
+
+.attributesList {
+  display: flex;
+}
+
+
+.attributesItem{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 63px;
+    height: 45px;
+    border: 1px solid #A6A6A6;
+    cursor: pointer;
+}
+.attributesItem:not(:last-child){
+    margin-right: 13px;
+}
+
+.attributesItemColor{
+  display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 63px;
+    height: 45px;  
+    border: 1px solid #A6A6A6;
+    cursor: pointer;
+
+
+}
+
+.attributesItemColor:not(:last-child){
+    margin-right: 13px;
+}
+
+.value{
+    font-size: 16px;
+    line-height: 18px;
+    font-weight: 400;
+}
+
+
+.price{
+    font-weight:700;
+    font-size: 24px;
+    line-height: 18px;
+}

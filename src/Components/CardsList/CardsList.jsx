@@ -1,7 +1,6 @@
 import s from "./CardsList.module.css";
 import { Query } from "react-apollo";
 import { Link } from "react-router-dom";
-import { useRouteMatch } from "react-router";
 
 // import product from "../../Images/product.jpg";
 import addToCartIcon from "../../Images/addToCartIcon.png";
