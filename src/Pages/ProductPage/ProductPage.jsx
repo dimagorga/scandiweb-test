@@ -1,11 +1,12 @@
 import { Component } from "react";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
+import { connect } from "react-redux";
+import { addProduct } from "../../redux/product/product-actions";
 import s from "./ProductPage.module.css";
 
 class ProductPage extends Component {
   state = {
-    productInCart: {},
     productId: "",
     selectImage: null,
     isShowMore: false,
@@ -30,18 +31,8 @@ class ProductPage extends Component {
       return { ...prev, isShowMore: !prev.isShowMore };
     });
   };
-  // onAttributeClick = (e) => {
-  //   console.log(e.target.id);
-  //   this.setState((prev) => {
-  //     console.log(this.state.selectedAtribute);
-  //     return {
-  //       ...prev,
-  //       selectedAtribute: [...prev.selectedAtribute, e.target.textContent],
-  //     };
-  //   });
-  // };
+
   setactiveAttribute = (id) => {
-    // this.setState({ activeAttributeIndex: index });
     this.setState((prev) => {
       if (!this.state.selectedAtribute.includes(id)) {
         return { ...prev, selectedAtribute: [...prev.selectedAtribute, id] };
@@ -56,21 +47,14 @@ class ProductPage extends Component {
 
   onSubmitProduct = (e) => {
     e.preventDefault();
-    if (this.state.selectedAtribute.length === 0) {
-      alert("Choose parameters ");
-    } else {
-      this.setState({
-        productInCart: {
-          name: this.state.productId,
-          attributes: [...this.state.selectedAtribute],
-        },
-      });
-      this.setState({ selectedAtribute: [] });
-    }
+    this.props.onSubmit({
+      name: this.state.productId,
+      attributes: [...this.state.selectedAtribute],
+    });
+    this.setState({ selectedAtribute: [] });
   };
 
   render() {
-    console.log(this.state.productInCart);
     return (
       <Query
         query={gql`
@@ -155,7 +139,6 @@ class ProductPage extends Component {
                             if (this.state.selectedAtribute.includes(item.id)) {
                               attributesClasses.push(s.attributesItem__active);
                             }
-
                             return (
                               <button
                                 id={item.id}
@@ -166,7 +149,14 @@ class ProductPage extends Component {
                                   backgroundColor: `${item.value}`,
                                 }}
                               >
-                                {item.displayValue}
+                                <span
+                                  className={s.value}
+                                  style={{
+                                    opacity: attr.name === "Color" && 0,
+                                  }}
+                                >
+                                  {item.displayValue}
+                                </span>
                               </button>
                             );
                           })}
@@ -218,8 +208,17 @@ class ProductPage extends Component {
     );
   }
 }
+// const mapStateToProps = (state) => {
+//   return {
+//     products: state.products,
+//   };
+// };
+const mapDispatchToProps = (dispatch) => ({
+  onSubmit: (product) => dispatch(addProduct(product)),
+});
 
-export default ProductPage;
+export default connect(null, mapDispatchToProps)(ProductPage);
+
 // attr.name !== "Color"
 //   ? s.attributesItem
 //   : s.attributesItemColor

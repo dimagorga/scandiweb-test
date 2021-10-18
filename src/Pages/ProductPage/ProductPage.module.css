@@ -67,6 +67,7 @@
   align-items: center;
   width: 63px;
   height: 45px;
+  color: #292929;
   border: 1px solid #a6a6a6;
   cursor: pointer;
 }
@@ -75,10 +76,13 @@
 }
 
 .attributesItem__active {
-  border: 4px solid black;
+  border: 5px solid #1d1f22;
+  background-color: #1d1f22;
+  color: #ffffff;
+  opacity: 1;
 }
 
-.attributesItemColor {
+/* .attributesItemColor {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -86,13 +90,14 @@
   width: 63px;
   height: 45px;
   cursor: pointer;
-}
+} */
 
-.attributesItemColor:not(:last-child) {
+/* .attributesItemColor:not(:last-child) {
   margin-right: 13px;
-}
+} */
 
 .value {
+  font-family: Source Sans Pro;
   display: flex;
   justify-content: center;
   align-items: center;

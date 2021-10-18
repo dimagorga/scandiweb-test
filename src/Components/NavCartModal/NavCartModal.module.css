@@ -1,0 +1,133 @@
+.Overlay {
+  position: fixed;
+  top: 80px;
+  left: 0;
+  width: 100%;
+  height: 150rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(57, 55, 72, 0.22);
+  z-index: 1200;
+}
+
+.Modal {
+  position: absolute;
+  box-sizing: border-box;
+  background-color: #ffffff;
+  overflow-y: scroll;
+  width: 350px;
+  padding: 8px 16px 20px;
+  top: 0;
+  max-height: 540px;
+  right: 101px;
+}
+
+.title {
+  font-family: Raleway;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 160%;
+  color: #1d1f22;
+  margin-bottom: 23px;
+}
+
+.totalItems {
+  font-family: Raleway;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 160%;
+  color: #1d1f22;
+}
+
+.miniCard {
+  display: flex;
+  justify-content: space-between;
+  height: 137px;
+  color: #1d1f22;
+  margin-bottom: 40px;
+}
+
+.leftSide {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.itemName {
+  font-family: Raleway;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 160%;
+}
+
+.itemPrice {
+  font-family: Raleway;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 160%;
+}
+
+.attributes {
+  display: flex;
+}
+
+.itemAttrs {
+  margin-right: 5px;
+  min-width: 24px;
+  padding: 3px;
+  height: 24px;
+  font-family: Source Sans Pro;
+  text-align: center;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 160%;
+  border: 1px solid #1d1f22;
+}
+
+.rightSide {
+  display: flex;
+}
+
+.itemImage {
+  display: block;
+  width: 105px;
+  height: 137px;
+  object-fit: contain;
+  margin-left: 10px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.buttonLink {
+  font-family: Raleway;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 120%;
+  width: 140px;
+  height: 43px;
+  color: #1d1f22;
+  background-color: #ffffff;
+  border: 1px solid #1d1f22;
+  cursor: pointer;
+}
+
+.buttonLink:active {
+  transform: scale(0.95);
+}
+
+.button {
+  width: 140px;
+  height: 43px;
+  background: #5ece7b;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.button:active {
+  transform: scale(0.95);
+}

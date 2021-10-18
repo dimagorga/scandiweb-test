@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import s from "./Nav.module.css";
 import logo from "../../Images/logo.jpg";
-import { ReactComponent as CartIcon } from "../../Images/cartIcon.svg";
+import NavCartButton from "../NavCartButton/NavCartButton";
 
 export default function Nav() {
   return (
@@ -35,7 +35,7 @@ export default function Nav() {
           </p>
         </li>
         <li>
-          <CartIcon className={s.cartIcon} />
+          <NavCartButton />
         </li>
       </ul>
     </div>

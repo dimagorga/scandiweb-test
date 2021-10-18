@@ -1,0 +1,14 @@
+.counter {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+}
+
+.btn {
+  width: 24px;
+  height: 24px;
+  box-sizing: border-box;
+  background: none;
+  border: 1px solid #1d1f22;
+}
