@@ -2,6 +2,8 @@ import { Component } from "react";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import { connect } from "react-redux";
+import { v4 as uuidv4 } from "uuid";
+
 import { addProduct } from "../../redux/product/product-actions";
 import s from "./ProductPage.module.css";
 
@@ -48,8 +50,10 @@ class ProductPage extends Component {
   onSubmitProduct = (e) => {
     e.preventDefault();
     this.props.onSubmit({
+      id: uuidv4(),
       name: this.state.productId,
       attributes: [...this.state.selectedAtribute],
+      value: 1,
     });
     this.setState({ selectedAtribute: [] });
   };

@@ -5,8 +5,18 @@ import { Link } from "react-router-dom";
 // import product from "../../Images/product.jpg";
 import addToCartIcon from "../../Images/addToCartIcon.png";
 import gql from "graphql-tag";
+import { connect } from "react-redux";
+import { addProduct } from "../../redux/product/product-actions";
 
-function CardsList() {
+function CardsList({ onSubmit }) {
+  const onCartBtnClick = (e) => {
+    e.preventDefault();
+    onSubmit({
+      name: e.target.id,
+      attributes: [],
+      value: 1,
+    });
+  };
   return (
     <Query
       query={gql`
@@ -48,14 +58,23 @@ function CardsList() {
                         {!item.inStock && (
                           <p className={s.imageBlur}>OUT OF STOCK</p>
                         )}
-                        {item.inStock && (
-                          <button className={s.btn} type="button">
-                            <img src={addToCartIcon} alt="addToCartIcon" />
-                          </button>
-                        )}
+
                         <p className={s.itemName}>{item.name}</p>
                         <p className={s.price}>$ {item.prices[0].amount}</p>
                       </Link>
+                      {item.inStock && (
+                        <button
+                          onClick={onCartBtnClick}
+                          className={s.btn}
+                          type="submit"
+                        >
+                          <img
+                            id={item.id}
+                            src={addToCartIcon}
+                            alt="addToCartIcon"
+                          />
+                        </button>
+                      )}
                     </li>
                   );
                 })}
@@ -68,4 +87,8 @@ function CardsList() {
   );
 }
 
-export default CardsList;
+const mapDispatchToProps = (dispatch) => ({
+  onSubmit: (product) => dispatch(addProduct(product)),
+});
+
+export default connect(null, mapDispatchToProps)(CardsList);

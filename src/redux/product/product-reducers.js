@@ -1,5 +1,10 @@
 import { createReducer, combineReducers } from "@reduxjs/toolkit";
-import { addProduct, removeProduct } from "./product-actions";
+import {
+  addProduct,
+  removeProduct,
+  incrementValue,
+  decrementValue,
+} from "./product-actions";
 
 const IS = {
   products: {
@@ -13,6 +18,16 @@ const ProductReducer = createReducer(IS.products.items, {
   },
   [removeProduct]: (state, { payload }) => {
     return state.filter((product) => product.id !== payload);
+  },
+  [incrementValue]: (state, { payload }) => {
+    return state.map((product) => {
+      return { ...product, value: product.value + payload };
+    });
+  },
+  [decrementValue]: (state, { payload }) => {
+    return state.map((product) => {
+      return { ...product, value: product.value - payload };
+    });
   },
 });
 

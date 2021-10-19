@@ -1,12 +1,12 @@
 import { Component } from "react";
 import { createPortal } from "react-dom";
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { Query } from "react-apollo";
 import { v4 as uuidv4 } from "uuid";
 import gql from "graphql-tag";
 import s from "./NavCartModal.module.css";
 import Counter from "../Counter/Couner";
+import ModalButtons from "../ModalButtons/ModalButtons";
 
 const modalRoot = document.querySelector("#modal-root");
 
@@ -43,17 +43,17 @@ class NavCartModal extends Component {
               <Query
                 key={uuidv4()}
                 query={gql`
-        query {
-          product(id: "${item.name}") {            
-            name            
-            gallery
-            prices {
-              amount
-              currency
-            }
-          }
-        }
-      `}
+                query {
+                  product(id: "${item.name}") {            
+                    name            
+                    gallery
+                    prices {
+                      amount
+                      currency
+                    }
+                  }
+                }
+              `}
               >
                 {({ loading, error, data }) => {
                   if (loading) return <p>Loading...</p>;
@@ -66,7 +66,7 @@ class NavCartModal extends Component {
                           <p className={s.itemName}>{product.name}</p>
                           <p className={s.itemPrice}>
                             {product.prices[0].currency}{" "}
-                            {product.prices[0].amount}
+                            {product.prices[0].amount * item.value}
                           </p>
                           <div className={s.attributes}>
                             {item.attributes.map((attr) => (
@@ -82,7 +82,7 @@ class NavCartModal extends Component {
                         </div>
 
                         <div className={s.rightSide}>
-                          <Counter />
+                          <Counter pageSize id={item.id} value={item.value} />
                           <img
                             className={s.itemImage}
                             src={product.gallery[0]}
@@ -96,17 +96,7 @@ class NavCartModal extends Component {
               </Query>
             );
           })}
-          <div className={s.buttons}>
-            <Link to="/cart">
-              <button
-                className={s.buttonLink}
-                onClick={this.props.onCloseModal}
-              >
-                VIEW BAG
-              </button>
-            </Link>
-            <button className={s.button}>CHECK OUT</button>
-          </div>
+          <ModalButtons onCloseModal={this.props.onCloseModal} />
         </div>
       </div>,
       modalRoot

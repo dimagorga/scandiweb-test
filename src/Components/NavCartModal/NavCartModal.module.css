@@ -96,38 +96,3 @@
   object-fit: contain;
   margin-left: 10px;
 }
-
-.buttons {
-  display: flex;
-  justify-content: space-between;
-}
-
-.buttonLink {
-  font-family: Raleway;
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 120%;
-  width: 140px;
-  height: 43px;
-  color: #1d1f22;
-  background-color: #ffffff;
-  border: 1px solid #1d1f22;
-  cursor: pointer;
-}
-
-.buttonLink:active {
-  transform: scale(0.95);
-}
-
-.button {
-  width: 140px;
-  height: 43px;
-  background: #5ece7b;
-  border: none;
-  color: #ffffff;
-  cursor: pointer;
-}
-
-.button:active {
-  transform: scale(0.95);
-}
