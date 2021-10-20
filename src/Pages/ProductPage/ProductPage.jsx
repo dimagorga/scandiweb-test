@@ -3,7 +3,6 @@ import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import { connect } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
-
 import { addProduct } from "../../redux/product/product-actions";
 import s from "./ProductPage.module.css";
 

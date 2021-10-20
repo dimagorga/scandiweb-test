@@ -9,7 +9,6 @@ import s from "./Counter.module.css";
 
 class Counter extends Component {
   increment = (e) => {
-    console.log(e.target.id);
     if (e.target.id === this.props.id) {
       return this.props.increment(1, this.props.id);
     }

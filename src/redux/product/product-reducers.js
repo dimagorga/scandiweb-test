@@ -23,7 +23,6 @@ const ProductReducer = createReducer(IS.products.items, {
   },
   [incrementValue]: (state, { payload }) => {
     return state.map((product) => {
-      console.log(payload);
       return product.id === payload.id
         ? {
             ...product,
@@ -34,7 +33,6 @@ const ProductReducer = createReducer(IS.products.items, {
   },
   [decrementValue]: (state, { payload }) => {
     return state.map((product) => {
-      console.log(payload);
       return product.id === payload.id
         ? {
             ...product,

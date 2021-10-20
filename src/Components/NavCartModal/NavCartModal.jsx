@@ -5,7 +5,7 @@ import { Query } from "react-apollo";
 import { v4 as uuidv4 } from "uuid";
 import gql from "graphql-tag";
 import s from "./NavCartModal.module.css";
-import Counter from "../Counter/Couner";
+import Counter from "../Counter/Counter";
 import ModalButtons from "../ModalButtons/ModalButtons";
 
 const modalRoot = document.querySelector("#modal-root");

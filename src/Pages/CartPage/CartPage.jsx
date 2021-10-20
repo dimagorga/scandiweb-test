@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import { Query } from "react-apollo";
 import gql from "graphql-tag";
-import Counter from "../../Components/Counter/Couner";
+import Counter from "../../Components/Counter/Counter";
 import s from "./CartPage.module.css";
 
 function CartPage({ products, currencies }) {
