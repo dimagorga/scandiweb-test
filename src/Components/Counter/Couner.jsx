@@ -8,21 +8,25 @@ import {
 import s from "./Counter.module.css";
 
 class Counter extends Component {
-  increment = () => {
-    return this.props.increment(1);
+  increment = (e) => {
+    console.log(e.target.id);
+    if (e.target.id === this.props.id) {
+      return this.props.increment(1, this.props.id);
+    }
   };
 
   decrement = () => {
     if (this.props.value === 1) {
       this.props.removeProduct(this.props.id);
     }
-    return this.props.decrement(1);
+    return this.props.decrement(1, this.props.id);
   };
 
   render() {
     return (
       <div className={s.counter}>
         <button
+          id={this.props.id}
           className={!this.props.pageSize ? s.btn : s.bigBtn}
           onClick={this.increment}
         >
@@ -43,8 +47,8 @@ class Counter extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  increment: (value) => dispatch(incrementValue(value)),
-  decrement: (value) => dispatch(decrementValue(value)),
+  increment: (value, id) => dispatch(incrementValue({ value, id })),
+  decrement: (value, id) => dispatch(decrementValue({ value, id })),
   removeProduct: (id) => dispatch(removeProduct(id)),
 });
 

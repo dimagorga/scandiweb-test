@@ -150,7 +150,7 @@ class ProductPage extends Component {
                                 key={item.value}
                                 className={attributesClasses.join(" ")}
                                 style={{
-                                  backgroundColor: `${item.value}`,
+                                  backgroundColor: `${item.displayValue}`,
                                 }}
                               >
                                 <span
@@ -169,7 +169,13 @@ class ProductPage extends Component {
                     );
                   })}
                   <p className={s.attributesTitle}>PRICE:</p>
-                  <p className={s.price}> $ {product.prices[0].amount}</p>
+                  <p className={s.price}>
+                    {product.prices.map(
+                      (cur) =>
+                        cur.currency === this.props.currency &&
+                        `${cur.currency} ${cur.amount}`
+                    )}
+                  </p>
                   <button
                     type="submit"
                     onClick={this.onSubmitProduct}
@@ -212,16 +218,14 @@ class ProductPage extends Component {
     );
   }
 }
-// const mapStateToProps = (state) => {
-//   return {
-//     products: state.products,
-//   };
-// };
+const mapStateToProps = (state) => ({
+  currency: state.products.currencies,
+});
 const mapDispatchToProps = (dispatch) => ({
   onSubmit: (product) => dispatch(addProduct(product)),
 });
 
-export default connect(null, mapDispatchToProps)(ProductPage);
+export default connect(mapStateToProps, mapDispatchToProps)(ProductPage);
 
 // attr.name !== "Color"
 //   ? s.attributesItem

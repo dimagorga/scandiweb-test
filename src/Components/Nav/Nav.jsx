@@ -2,6 +2,7 @@ import { NavLink } from "react-router-dom";
 import s from "./Nav.module.css";
 import logo from "../../Images/logo.jpg";
 import NavCartButton from "../NavCartButton/NavCartButton";
+import NavCurrencyBtn from "../NavCurrencyBtn/NavCurrencyBtn";
 
 export default function Nav() {
   return (
@@ -30,9 +31,7 @@ export default function Nav() {
       <img className={s.logo} src={logo} alt="logo" />
       <ul className={s.secondaryNav}>
         <li>
-          <p className={s.currency}>
-            $<span></span>^
-          </p>
+          <NavCurrencyBtn />
         </li>
         <li>
           <NavCartButton />

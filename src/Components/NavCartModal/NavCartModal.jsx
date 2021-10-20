@@ -11,6 +11,9 @@ import ModalButtons from "../ModalButtons/ModalButtons";
 const modalRoot = document.querySelector("#modal-root");
 
 class NavCartModal extends Component {
+  state = {
+    total: 0,
+  };
   componentDidMount() {
     window.addEventListener("keydown", this.handleCloseModal);
   }
@@ -65,8 +68,11 @@ class NavCartModal extends Component {
                         <div className={s.leftSide}>
                           <p className={s.itemName}>{product.name}</p>
                           <p className={s.itemPrice}>
-                            {product.prices[0].currency}{" "}
-                            {product.prices[0].amount * item.value}
+                            {product.prices.map(
+                              (cur) =>
+                                cur.currency === this.props.currencies &&
+                                `${cur.currency} ${cur.amount * item.value}`
+                            )}
                           </p>
                           <div className={s.attributes}>
                             {item.attributes.map((attr) => (
@@ -82,7 +88,7 @@ class NavCartModal extends Component {
                         </div>
 
                         <div className={s.rightSide}>
-                          <Counter pageSize id={item.id} value={item.value} />
+                          <Counter id={item.id} value={item.value} />
                           <img
                             className={s.itemImage}
                             src={product.gallery[0]}
@@ -96,6 +102,8 @@ class NavCartModal extends Component {
               </Query>
             );
           })}
+          <p>Total: {this.state.total}</p>
+
           <ModalButtons onCloseModal={this.props.onCloseModal} />
         </div>
       </div>,
@@ -106,6 +114,7 @@ class NavCartModal extends Component {
 
 const mapStateToProps = (state) => ({
   products: state.products.items,
+  currencies: state.products.currencies,
 });
 
 export default connect(mapStateToProps)(NavCartModal);

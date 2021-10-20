@@ -1,90 +1,133 @@
 import s from "./CardsList.module.css";
 import { Query } from "react-apollo";
-import { Link } from "react-router-dom";
-
-// import product from "../../Images/product.jpg";
-import addToCartIcon from "../../Images/addToCartIcon.png";
+import { Component } from "react";
 import gql from "graphql-tag";
 import { connect } from "react-redux";
+import { v4 as uuidv4 } from "uuid";
 import { addProduct } from "../../redux/product/product-actions";
+import CardsItem from "../CardsItem/CardsItem";
 
-function CardsList({ onSubmit }) {
-  const onCartBtnClick = (e) => {
+class CardsList extends Component {
+  state = {
+    category: "all",
+  };
+
+  onCategoryBtnClick = (e) => {
+    this.setState({ category: e.target.textContent });
+  };
+
+  onCartBtnClick = (e) => {
     e.preventDefault();
-    onSubmit({
+    this.props.onSubmit({
+      id: uuidv4(),
       name: e.target.id,
       attributes: [],
       value: 1,
     });
   };
-  return (
-    <Query
-      query={gql`
-        query {
-          categories {
-            name
-            products {
-              id
+  render() {
+    return (
+      <Query
+        query={gql`
+          query {
+            category {
               name
-              inStock
-              gallery
-              prices {
-                currency
-                amount
+              products {
+                id
+                name
+                inStock
+                gallery
+                prices {
+                  currency
+                  amount
+                }
+              }
+            }
+            categories {
+              name
+              products {
+                id
+                name
+                inStock
+                gallery
+                prices {
+                  currency
+                  amount
+                }
               }
             }
           }
-        }
-      `}
-    >
-      {({ loading, error, data }) => {
-        if (loading) return <p>Loading...</p>;
-        if (error) return <p>Error : </p>;
+        `}
+      >
+        {({ loading, error, data }) => {
+          if (loading) return <p>Loading...</p>;
+          if (error) return <p>Error : </p>;
+          const { category, categories } = data;
 
-        return data.categories.map((category) => {
           return (
-            <div key={category.name} className={s.wrapper}>
-              <h2 className={s.title}>{category.name}</h2>
-              <ul className={s.list}>
-                {category.products.map((item) => {
+            <div>
+              <div className={s.categoryButtons}>
+                <button
+                  className={s.categoryBtn}
+                  onClick={this.onCategoryBtnClick}
+                  key={category.name}
+                >
+                  {category.name}
+                </button>
+                {categories.map((cat) => {
                   return (
-                    <li key={item.id} className={s.item}>
-                      <Link className={s.link} to={`/products/${item.id}`}>
-                        <img
-                          className={s.image}
-                          src={item.gallery[0]}
-                          alt="name"
-                        />
-                        {!item.inStock && (
-                          <p className={s.imageBlur}>OUT OF STOCK</p>
-                        )}
-
-                        <p className={s.itemName}>{item.name}</p>
-                        <p className={s.price}>$ {item.prices[0].amount}</p>
-                      </Link>
-                      {item.inStock && (
-                        <button
-                          onClick={onCartBtnClick}
-                          className={s.btn}
-                          type="submit"
-                        >
-                          <img
-                            id={item.id}
-                            src={addToCartIcon}
-                            alt="addToCartIcon"
-                          />
-                        </button>
-                      )}
-                    </li>
+                    <button
+                      className={s.categoryBtn}
+                      onClick={this.onCategoryBtnClick}
+                      key={cat.name}
+                    >
+                      {cat.name}
+                    </button>
                   );
                 })}
-              </ul>
+              </div>
+              {this.state.category === category.name ? (
+                <div key={category.name}>
+                  <h2 className={s.title}>{category.name}</h2>
+                  <ul className={s.list}>
+                    {category.products.map((item) => {
+                      return (
+                        <CardsItem
+                          key={item.id}
+                          item={item}
+                          onCartBtnClick={this.onCartBtnClick}
+                        />
+                      );
+                    })}
+                  </ul>
+                </div>
+              ) : (
+                categories.map(
+                  (cat) =>
+                    cat.name === this.state.category && (
+                      <div key={cat.name}>
+                        <h2 className={s.title}>{cat.name}</h2>
+                        <ul className={s.list}>
+                          {cat.products.map((item) => {
+                            return (
+                              <CardsItem
+                                key={item.id}
+                                item={item}
+                                onCartBtnClick={this.onCartBtnClick}
+                              />
+                            );
+                          })}
+                        </ul>
+                      </div>
+                    )
+                )
+              )}
             </div>
           );
-        });
-      }}
-    </Query>
-  );
+        }}
+      </Query>
+    );
+  }
 }
 
 const mapDispatchToProps = (dispatch) => ({
