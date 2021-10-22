@@ -33,7 +33,7 @@ class ProductPage extends Component {
     });
   };
 
-  setactiveAttribute = (id) => {
+  setActiveAttribute = (id) => {
     this.setState((prev) => {
       if (!this.state.selectedAtribute.includes(id)) {
         return { ...prev, selectedAtribute: [...prev.selectedAtribute, id] };
@@ -145,7 +145,7 @@ class ProductPage extends Component {
                             return (
                               <button
                                 id={item.id}
-                                onClick={() => this.setactiveAttribute(item.id)}
+                                onClick={() => this.setActiveAttribute(item.id)}
                                 key={item.value}
                                 className={attributesClasses.join(" ")}
                                 style={{

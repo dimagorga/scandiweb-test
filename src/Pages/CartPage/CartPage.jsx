@@ -3,13 +3,14 @@ import { Query } from "react-apollo";
 import gql from "graphql-tag";
 import Counter from "../../Components/Counter/Counter";
 import s from "./CartPage.module.css";
+import TotalCounter from "../../Components/TotalCounter/TotalCounter";
 
 function CartPage({ products, currencies }) {
   return (
     <div className={s.wrapper}>
       <h2 className={s.pageTitle}>CART</h2>
       {products.length ? (
-        <ul>
+        <ul className={s.list}>
           {products.map((item) => {
             return (
               <li key={item.id} id={item.id} className={s.item}>
@@ -40,7 +41,10 @@ function CartPage({ products, currencies }) {
                               {product.prices.map(
                                 (cur) =>
                                   cur.currency === currencies &&
-                                  `${cur.currency} ${cur.amount * item.value} `
+                                  `${cur.currency} ${
+                                    Math.round(cur.amount * item.value * 100) /
+                                    100
+                                  } `
                               )}
                             </p>
                             <div className={s.attributes}>
@@ -72,7 +76,7 @@ function CartPage({ products, currencies }) {
               </li>
             );
           })}
-          <p>Total: </p>
+          <TotalCounter />
         </ul>
       ) : (
         <p className={s.emptyMessage}>Your cart is empty.</p>

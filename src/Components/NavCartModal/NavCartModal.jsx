@@ -7,6 +7,7 @@ import gql from "graphql-tag";
 import s from "./NavCartModal.module.css";
 import Counter from "../Counter/Counter";
 import ModalButtons from "../ModalButtons/ModalButtons";
+import TotalCounter from "../TotalCounter/TotalCounter";
 
 const modalRoot = document.querySelector("#modal-root");
 
@@ -71,7 +72,10 @@ class NavCartModal extends Component {
                             {product.prices.map(
                               (cur) =>
                                 cur.currency === this.props.currencies &&
-                                `${cur.currency} ${cur.amount * item.value}`
+                                `${cur.currency} ${
+                                  Math.round(cur.amount * item.value * 100) /
+                                  100
+                                }`
                             )}
                           </p>
                           <div className={s.attributes}>
@@ -102,9 +106,10 @@ class NavCartModal extends Component {
               </Query>
             );
           })}
-          <p>Total: {this.state.total}</p>
-
-          <ModalButtons onCloseModal={this.props.onCloseModal} />
+          <div className={s.modalOptions}>
+            <TotalCounter />
+            <ModalButtons onCloseModal={this.props.onCloseModal} />
+          </div>
         </div>
       </div>,
       modalRoot
