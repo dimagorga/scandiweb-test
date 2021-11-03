@@ -1,8 +1,8 @@
-import gql from "graphql-tag";
 import { Component } from "react";
 import { Query } from "react-apollo";
 import { connect } from "react-redux";
 import { changeCurrency } from "../../redux/product/currencies-action";
+import { currenciesRequest } from "../../services/gql-requests";
 import s from "./NavCurrencyBtn.module.css";
 
 class NavCurrencyBtn extends Component {
@@ -24,13 +24,7 @@ class NavCurrencyBtn extends Component {
 
   render() {
     return (
-      <Query
-        query={gql`
-          query {
-            currencies
-          }
-        `}
-      >
+      <Query query={currenciesRequest()}>
         {({ loading, error, data }) => {
           if (loading) return <p>Loading...</p>;
           if (error) return <p>Error : </p>;

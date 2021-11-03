@@ -1,10 +1,11 @@
 import { Component } from "react";
 import { Query } from "react-apollo";
-import gql from "graphql-tag";
+import parse from "html-react-parser";
 import { connect } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import { addProduct } from "../../redux/product/product-actions";
 import s from "./ProductPage.module.css";
+import { productRequest } from "../../services/gql-requests";
 
 class ProductPage extends Component {
   state = {
@@ -28,7 +29,6 @@ class ProductPage extends Component {
 
   onShowMore = () => {
     this.setState((prev) => {
-      console.log(prev);
       return { ...prev, isShowMore: !prev.isShowMore };
     });
   };
@@ -59,33 +59,7 @@ class ProductPage extends Component {
 
   render() {
     return (
-      <Query
-        query={gql`
-        query {
-          product(id: "${this.state.productId}") {
-            name
-            inStock
-            gallery
-            description
-            category
-            attributes {
-              
-              name
-              items {
-                id
-                value
-                displayValue
-              }
-            }
-            prices {
-              amount
-              currency
-            }
-            brand
-          }
-        }
-      `}
-      >
+      <Query query={productRequest(this.state.productId)}>
         {({ loading, error, data }) => {
           if (loading) return <p>Loading...</p>;
           if (error) return <p>Error : </p>;
@@ -186,18 +160,13 @@ class ProductPage extends Component {
                   {product.description &&
                     (!this.state.isShowMore &&
                     product.description.length > 300 ? (
-                      <div
-                        dangerouslySetInnerHTML={{
-                          __html: product.description.slice(0, 300) + "...",
-                        }}
-                      />
+                      <div className={s.description}>
+                        {parse(product.description.slice(0, 300) + "...")}
+                      </div>
                     ) : (
-                      <div
-                        className={s.description}
-                        dangerouslySetInnerHTML={{
-                          __html: product.description,
-                        }}
-                      />
+                      <div className={s.description}>
+                        {parse(product.description)}
+                      </div>
                     ))}
                   {product.description.length > 300 && (
                     <button
@@ -225,7 +194,3 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductPage);
-
-// attr.name !== "Color"
-//   ? s.attributesItem
-//   : s.attributesItemColor

@@ -1,25 +1,11 @@
 import { Query } from "react-apollo";
-import gql from "graphql-tag";
 import { connect } from "react-redux";
 import s from "./TotalCounter.module.css";
+import { pricesRequest } from "../../services/gql-requests";
 
 function TotalCounter({ products, currency }) {
   return (
-    <Query
-      query={gql`
-        query {
-          category {
-            products {
-              id
-              prices {
-                currency
-                amount
-              }
-            }
-          }
-        }
-      `}
-    >
+    <Query query={pricesRequest()}>
       {({ loading, error, data }) => {
         if (loading) return <p>Loading...</p>;
         if (error) return <p>Error : </p>;

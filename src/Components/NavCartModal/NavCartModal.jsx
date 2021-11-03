@@ -3,11 +3,11 @@ import { createPortal } from "react-dom";
 import { connect } from "react-redux";
 import { Query } from "react-apollo";
 import { v4 as uuidv4 } from "uuid";
-import gql from "graphql-tag";
 import s from "./NavCartModal.module.css";
 import Counter from "../Counter/Counter";
 import ModalButtons from "../ModalButtons/ModalButtons";
 import TotalCounter from "../TotalCounter/TotalCounter";
+import { productAttributesRequest } from "../../services/gql-requests";
 
 const modalRoot = document.querySelector("#modal-root");
 
@@ -44,21 +44,7 @@ class NavCartModal extends Component {
           </p>
           {this.props.products.map((item) => {
             return (
-              <Query
-                key={uuidv4()}
-                query={gql`
-                query {
-                  product(id: "${item.name}") {            
-                    name            
-                    gallery
-                    prices {
-                      amount
-                      currency
-                    }
-                  }
-                }
-              `}
-              >
+              <Query key={uuidv4()} query={productAttributesRequest(item.name)}>
                 {({ loading, error, data }) => {
                   if (loading) return <p>Loading...</p>;
                   if (error) return <p>Error : </p>;

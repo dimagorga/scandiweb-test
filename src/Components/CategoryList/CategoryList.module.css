@@ -1,0 +1,40 @@
+.list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.title {
+  font-size: 42px;
+  font-weight: 400;
+  line-height: 160%;
+  padding-bottom: 80px;
+  color: #1d1f22;
+}
+
+.title:first-letter {
+  text-transform: capitalize;
+}
+
+.categoryButtons {
+  margin-bottom: 30px;
+}
+
+.categoryBtn {
+  font-family: Raleway;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 160%;
+  margin-right: 10px;
+  background-color: #ffffff;
+  border: 1px solid #1d1f22;
+  transition: all 250ms;
+  cursor: pointer;
+}
+
+.categoryBtn:hover {
+  background-color: #5ece7b;
+  color: #ffffff;
+}
+.categoryBtn:active {
+  transform: scale(0.9);
+}

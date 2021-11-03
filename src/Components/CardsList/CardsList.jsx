@@ -1,16 +1,16 @@
-import s from "./CardsList.module.css";
 import { Query } from "react-apollo";
-import { Component } from "react";
-import gql from "graphql-tag";
+import { PureComponent } from "react";
 import { connect } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
+import {
+  allProductsRequest,
+  productsCategoriesRequest,
+} from "../../services/gql-requests";
 import { addProduct } from "../../redux/product/product-actions";
-import CardsItem from "../CardsItem/CardsItem";
+import CategoryList from "../CategoryList/CategoryList";
 
-class CardsList extends Component {
-  state = {
-    category: "all",
-  };
+class CardsList extends PureComponent {
+  changeCategory = (category) => (category ? category : null);
 
   onCategoryBtnClick = (e) => {
     this.setState({ category: e.target.textContent });
@@ -28,97 +28,29 @@ class CardsList extends Component {
   render() {
     return (
       <Query
-        query={gql`
-          query {
-            category {
-              name
-              products {
-                id
-                name
-                inStock
-                gallery
-                prices {
-                  currency
-                  amount
-                }
-              }
-            }
-            categories {
-              name
-              products {
-                id
-                name
-                inStock
-                gallery
-                prices {
-                  currency
-                  amount
-                }
-              }
-            }
-          }
-        `}
+        query={
+          this.props.pageCategory === "/all"
+            ? allProductsRequest()
+            : productsCategoriesRequest()
+        }
       >
         {({ loading, error, data }) => {
           if (loading) return <p>Loading...</p>;
           if (error) return <p>Error : </p>;
-          const { category, categories } = data;
+          const allCategories = this.changeCategory(data);
 
           return (
             <div>
-              <div className={s.categoryButtons}>
-                <button
-                  className={s.categoryBtn}
-                  onClick={this.onCategoryBtnClick}
-                  key={category.name}
-                >
-                  {category.name}
-                </button>
-                {categories.map((cat) => {
-                  return (
-                    <button
-                      className={s.categoryBtn}
-                      onClick={this.onCategoryBtnClick}
-                      key={cat.name}
-                    >
-                      {cat.name}
-                    </button>
-                  );
-                })}
-              </div>
-              {this.state.category === category.name ? (
-                <div key={category.name}>
-                  <h2 className={s.title}>{category.name}</h2>
-                  <ul className={s.list}>
-                    {category.products.map((item) => {
-                      return (
-                        <CardsItem
-                          key={item.id}
-                          item={item}
-                          onCartBtnClick={this.onCartBtnClick}
-                        />
-                      );
-                    })}
-                  </ul>
-                </div>
+              {allCategories.category ? (
+                <CategoryList
+                  key={allCategories.category.name}
+                  category={allCategories.category}
+                />
               ) : (
-                categories.map(
+                allCategories.categories.map(
                   (cat) =>
-                    cat.name === this.state.category && (
-                      <div key={cat.name}>
-                        <h2 className={s.title}>{cat.name}</h2>
-                        <ul className={s.list}>
-                          {cat.products.map((item) => {
-                            return (
-                              <CardsItem
-                                key={item.id}
-                                item={item}
-                                onCartBtnClick={this.onCartBtnClick}
-                              />
-                            );
-                          })}
-                        </ul>
-                      </div>
+                    `/${cat.name}` === this.props.pageCategory && (
+                      <CategoryList key={cat.name} category={cat} />
                     )
                 )
               )}
