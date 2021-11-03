@@ -3,6 +3,8 @@ import { Query } from "react-apollo";
 import Counter from "../../Components/Counter/Counter";
 import s from "./CartPage.module.css";
 import TotalCounter from "../../Components/TotalCounter/TotalCounter";
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import { Carousel } from "react-responsive-carousel";
 import { productAttributesRequest } from "../../services/gql-requests";
 
 function CartPage({ products, currencies }) {
@@ -49,11 +51,29 @@ function CartPage({ products, currencies }) {
 
                           <div className={s.rightSide}>
                             <Counter pageSize id={item.id} value={item.value} />
-                            <img
-                              className={s.itemImage}
-                              src={product.gallery[0]}
-                              alt={product.name}
-                            />
+                            <Carousel
+                              showThumbs={false}
+                              showIndicators={false}
+                              width={"141px"}
+                              centerMode={true}
+                              centerSlidePercentage={100}
+                              emulateTouch={true}
+                              swipeable={true}
+                              infiniteLoop={true}
+                              showStatus={false}
+                              useKeyboardArrows={true}
+                            >
+                              {product.gallery.map((image) => {
+                                return (
+                                  <img
+                                    key={image}
+                                    className={s.itemImage}
+                                    src={image}
+                                    alt={product.name}
+                                  />
+                                );
+                              })}
+                            </Carousel>
                           </div>
                         </div>
                       )

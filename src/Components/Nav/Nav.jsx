@@ -25,7 +25,10 @@ class Nav extends PureComponent {
               <ul className={s.list}>
                 <li className={s.item}>
                   <NavLink
-                    to={`/${category.name}`}
+                    to={{
+                      pathname: `/${category.name}`,
+                      state: { from: this.props.location },
+                    }}
                     className={s.link}
                     activeClassName={s.activeLink}
                   >
@@ -36,7 +39,10 @@ class Nav extends PureComponent {
                   return (
                     <li key={cat.name} className={s.item}>
                       <NavLink
-                        to={`/${cat.name}`}
+                        to={{
+                          pathname: `/${cat.name}`,
+                          state: { from: this.props.location },
+                        }}
                         className={s.link}
                         activeClassName={s.activeLink}
                       >
