@@ -23,6 +23,7 @@ class NavCurrencyBtn extends Component {
   };
 
   render() {
+    const { showModal } = this.state;
     return (
       <Query query={currenciesRequest()}>
         {({ loading, error, data }) => {
@@ -38,7 +39,7 @@ class NavCurrencyBtn extends Component {
               >
                 {this.props.currencies}
               </button>
-              {this.state.showModal && (
+              {showModal && (
                 <div className={s.options}>
                   {currencies.map((currency) => {
                     return (

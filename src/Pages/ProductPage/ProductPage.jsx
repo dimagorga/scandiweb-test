@@ -6,6 +6,8 @@ import { v4 as uuidv4 } from "uuid";
 import { addProduct } from "../../redux/product/product-actions";
 import s from "./ProductPage.module.css";
 import { productRequest } from "../../services/gql-requests";
+import ProductAttributes from "../../Components/ProductAttributes/ProductAttributes";
+import ProductImages from "../../Components/ProductImages/ProductImages";
 
 class ProductPage extends Component {
   state = {
@@ -16,7 +18,8 @@ class ProductPage extends Component {
   };
 
   componentDidMount() {
-    const productId = this.props.match.params.productId;
+    const { match } = this.props;
+    const productId = match.params.productId;
     this.setState({ productId });
   }
 
@@ -34,32 +37,37 @@ class ProductPage extends Component {
   };
 
   setActiveAttribute = (id) => {
+    const { selectedAtribute } = this.state;
     this.setState((prev) => {
-      if (!this.state.selectedAtribute.includes(id)) {
+      if (!selectedAtribute.includes(id)) {
         return { ...prev, selectedAtribute: [...prev.selectedAtribute, id] };
-      } else {
-        return {
-          ...prev,
-          selectedAtribute: prev.selectedAtribute.splice(1, 0),
-        };
       }
     });
   };
 
   onSubmitProduct = (e) => {
     e.preventDefault();
-    this.props.onSubmit({
-      id: uuidv4(),
-      name: this.state.productId,
-      attributes: [...this.state.selectedAtribute],
-      value: 1,
-    });
-    this.setState({ selectedAtribute: [] });
+    const { selectedAtribute, productId } = this.state;
+    const { onSubmit } = this.props;
+    if (selectedAtribute.length < 1) {
+      alert("Please choose attributes");
+    }
+    if (selectedAtribute.length > 0) {
+      onSubmit({
+        id: uuidv4(),
+        name: productId,
+        attributes: [...selectedAtribute],
+        value: 1,
+      });
+      this.setState({ selectedAtribute: [] });
+    }
   };
 
   render() {
+    const { productId, selectImage, isShowMore } = this.state;
+    const { currency } = this.props;
     return (
-      <Query query={productRequest(this.state.productId)}>
+      <Query query={productRequest(productId)}>
         {({ loading, error, data }) => {
           if (loading) return <p>Loading...</p>;
           if (error) return <p>Error : </p>;
@@ -68,89 +76,28 @@ class ProductPage extends Component {
           return (
             product && (
               <div className={s.wrapper}>
-                <div className={s.imagesSection}>
-                  <ul className={s.imagesList}>
-                    {product &&
-                      product.gallery.map((image) => {
-                        return (
-                          <li
-                            onClick={this.onSelectImage}
-                            key={image}
-                            className={s.imagesListItem}
-                          >
-                            <img
-                              className={s.selectImage}
-                              src={image}
-                              alt={image}
-                            />
-                          </li>
-                        );
-                      })}
-                  </ul>
-                  <img
-                    className={s.selectedImage}
-                    src={
-                      !this.state.selectImage
-                        ? product.gallery[0]
-                        : this.state.selectImage
-                    }
-                    alt={
-                      !this.state.selectImage
-                        ? product.gallery[0]
-                        : this.state.selectImage
-                    }
-                  />
-                </div>
-
+                <ProductImages
+                  product={product}
+                  selectImage={selectImage}
+                  onSelectImage={this.onSelectImage}
+                />
                 <div>
                   <h3 className={s.title}>{product.name}</h3>
-                  {product.attributes.map((attr) => {
-                    return (
-                      <div key={attr.name} className={s.attributes}>
-                        <h2 className={s.attributesTitle}>
-                          {attr.name.toUpperCase()}:
-                        </h2>
-                        <div className={s.attributesList}>
-                          {attr.items.map((item) => {
-                            const attributesClasses = [s.attributesItem];
-                            if (this.state.selectedAtribute.includes(item.id)) {
-                              attributesClasses.push(s.attributesItem__active);
-                            }
-                            return (
-                              <button
-                                id={item.id}
-                                onClick={() => this.setActiveAttribute(item.id)}
-                                key={item.value}
-                                className={attributesClasses.join(" ")}
-                                style={{
-                                  backgroundColor: `${item.displayValue}`,
-                                }}
-                              >
-                                <span
-                                  className={s.value}
-                                  style={{
-                                    opacity: attr.name === "Color" && 0,
-                                  }}
-                                >
-                                  {item.displayValue}
-                                </span>
-                              </button>
-                            );
-                          })}
-                        </div>
-                      </div>
-                    );
-                  })}
+                  <ProductAttributes
+                    product={product}
+                    onAttributesClick={this.setActiveAttribute}
+                  />
+
                   <p className={s.attributesTitle}>PRICE:</p>
                   <p className={s.price}>
                     {product.prices.map(
                       (cur) =>
-                        cur.currency === this.props.currency &&
+                        cur.currency === currency &&
                         `${cur.currency} ${cur.amount}`
                     )}
                   </p>
                   <button
-                    type="submit"
+                    type="button"
                     onClick={this.onSubmitProduct}
                     disabled={!product.inStock && true}
                     className={s.submitBtn}
@@ -158,8 +105,7 @@ class ProductPage extends Component {
                     {!product.inStock ? "OUT OF STOCK" : "ADD TO CART"}
                   </button>
                   {product.description &&
-                    (!this.state.isShowMore &&
-                    product.description.length > 300 ? (
+                    (!isShowMore && product.description.length > 300 ? (
                       <div className={s.description}>
                         {parse(product.description.slice(0, 300) + "...")}
                       </div>
@@ -174,7 +120,7 @@ class ProductPage extends Component {
                       type="button"
                       onClick={this.onShowMore}
                     >
-                      {!this.state.isShowMore ? "Show more" : "Hide"}
+                      {!isShowMore ? "Show more" : "Hide"}
                     </button>
                   )}
                 </div>

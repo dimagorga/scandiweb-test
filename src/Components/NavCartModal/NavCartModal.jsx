@@ -30,19 +30,19 @@ class NavCartModal extends Component {
   };
 
   render() {
+    const { products, currencies, onCloseModal } = this.props;
+
     return createPortal(
       <div className={s.Overlay} onClick={this.handleCloseModal}>
         <div
           className={s.Modal}
-          style={{ overflowY: this.props.products.length > 3 && "scroll" }}
+          style={{ overflowY: products.length > 3 && "scroll" }}
         >
           <p className={s.title}>
             My Bag,{" "}
-            <span className={s.totalItems}>
-              {this.props.products.length} items
-            </span>
+            <span className={s.totalItems}>{products.length} items</span>
           </p>
-          {this.props.products.map((item) => {
+          {products.map((item) => {
             return (
               <Query key={uuidv4()} query={productAttributesRequest(item.name)}>
                 {({ loading, error, data }) => {
@@ -57,7 +57,7 @@ class NavCartModal extends Component {
                           <p className={s.itemPrice}>
                             {product.prices.map(
                               (cur) =>
-                                cur.currency === this.props.currencies &&
+                                cur.currency === currencies &&
                                 `${cur.currency} ${
                                   Math.round(cur.amount * item.value * 100) /
                                   100
@@ -94,7 +94,7 @@ class NavCartModal extends Component {
           })}
           <div className={s.modalOptions}>
             <TotalCounter />
-            <ModalButtons onCloseModal={this.props.onCloseModal} />
+            <ModalButtons onCloseModal={onCloseModal} />
           </div>
         </div>
       </div>,

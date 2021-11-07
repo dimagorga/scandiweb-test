@@ -14,6 +14,7 @@ class Nav extends PureComponent {
     return history.push(location?.state?.from ?? "/all");
   };
   render() {
+    const { location } = this.props;
     return (
       <Query query={categoriesNameRequest()}>
         {({ loading, error, data }) => {
@@ -27,7 +28,7 @@ class Nav extends PureComponent {
                   <NavLink
                     to={{
                       pathname: `/${category.name}`,
-                      state: { from: this.props.location },
+                      state: { from: location },
                     }}
                     className={s.link}
                     activeClassName={s.activeLink}
@@ -41,7 +42,7 @@ class Nav extends PureComponent {
                       <NavLink
                         to={{
                           pathname: `/${cat.name}`,
-                          state: { from: this.props.location },
+                          state: { from: location },
                         }}
                         className={s.link}
                         activeClassName={s.activeLink}

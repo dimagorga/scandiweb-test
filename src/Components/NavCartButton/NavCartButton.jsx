@@ -21,7 +21,9 @@ class NavCartButton extends Component {
   };
 
   render() {
-    if (this.state.showModal) {
+    const { products } = this.props;
+    const { showModal } = this.state;
+    if (showModal) {
       document.body.style.overflowY = "hidden";
     } else {
       document.body.style.overflowY = "scroll";
@@ -30,13 +32,11 @@ class NavCartButton extends Component {
       <>
         <button type="button" onClick={this.onIconClick} className={s.buttton}>
           <CartIcon className={s.cartIcon} />
-          {this.props.products.length > 0 && (
-            <span className={s.productCount}>{this.props.products.length}</span>
+          {products.length > 0 && (
+            <span className={s.productCount}>{products.length}</span>
           )}
         </button>
-        {this.state.showModal && (
-          <NavCartModal onCloseModal={this.onModalClose} />
-        )}
+        {showModal && <NavCartModal onCloseModal={this.onModalClose} />}
       </>
     );
   }

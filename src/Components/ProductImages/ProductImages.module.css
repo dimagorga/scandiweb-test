@@ -1,0 +1,32 @@
+.imagesSection {
+  display: flex;
+}
+
+.imagesListItem {
+  width: 79px;
+}
+
+.imagesListItem:not(:last-child) {
+  margin-bottom: 40px;
+}
+
+.selectImage {
+  display: block;
+  width: 79px;
+  height: 80px;
+  object-fit: cover;
+  cursor: pointer;
+  transition: all 250ms;
+}
+
+.selectImage:hover {
+  transform: scale(1.1);
+}
+
+.selectedImage {
+  width: 610px;
+  height: 511px;
+  object-fit: contain;
+  margin-left: 40px;
+  margin-right: 100px;
+}

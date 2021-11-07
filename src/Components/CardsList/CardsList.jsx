@@ -26,10 +26,11 @@ class CardsList extends PureComponent {
     });
   };
   render() {
+    const { pageCategory } = this.props;
     return (
       <Query
         query={
-          this.props.pageCategory === "/all"
+          pageCategory === "/all"
             ? allProductsRequest()
             : productsCategoriesRequest()
         }
@@ -49,7 +50,7 @@ class CardsList extends PureComponent {
               ) : (
                 allCategories.categories.map(
                   (cat) =>
-                    `/${cat.name}` === this.props.pageCategory && (
+                    `/${cat.name}` === pageCategory && (
                       <CategoryList key={cat.name} category={cat} />
                     )
                 )

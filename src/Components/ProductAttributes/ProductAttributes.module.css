@@ -1,0 +1,77 @@
+.attributes {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.attributesTitle {
+  font-family: Roboto Condensed;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 18px;
+  margin-bottom: 8px;
+}
+
+.attributesList {
+  display: flex;
+}
+
+.attributesForm {
+  display: inline-block;
+}
+
+.attributesForm:not(:last-child) {
+  margin-right: 13px;
+}
+.attrButton {
+  display: none;
+}
+.attrLabel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  box-sizing: border-box;
+  font-family: Source Sans Pro;
+  font-size: 16px;
+  line-height: 18px;
+  font-weight: 400;
+  width: 63px;
+  height: 45px;
+  background-color: #ffffff;
+  color: #292929;
+  border: 1px solid #a6a6a6;
+  cursor: pointer;
+}
+
+/* Checked */
+.attrButton:checked + .attrLabel {
+  border: 5px solid #1d1f22;
+  background-color: #1d1f22;
+  color: #ffffff;
+  opacity: 1;
+}
+
+/* Disabled */
+.attrButton:disabled + label {
+  background: #efefef;
+  color: #666;
+  cursor: default;
+}
+
+.coloredLabel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  box-sizing: border-box;
+  font-size: 0;
+  width: 63px;
+  height: 45px;
+  border: 1px solid #a6a6a6;
+  cursor: pointer;
+}
+
+.attrButton:checked + .coloredLabel {
+  border: 5px solid #1d1f22;
+}

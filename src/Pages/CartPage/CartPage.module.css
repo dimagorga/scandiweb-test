@@ -73,6 +73,9 @@
 .rightSide {
   display: flex;
 }
+.carousel {
+  margin-left: 12px;
+}
 
 .itemImage {
   display: block;
