@@ -2,9 +2,35 @@ import { PureComponent } from "react";
 import s from "./ProductAttributes.module.css";
 
 class ProductAttributes extends PureComponent {
+  state = {
+    color: "",
+    size: "",
+    capacity: "",
+    attrs: [],
+  };
+
+  componentDidUpdate() {
+    const { color, size, capacity } = this.state;
+
+    const onAttributesClick = this.props.onAttributesClick;
+    onAttributesClick([color, size, capacity]);
+  }
+  attrs = async (e) => {
+    const { name, value } = e.target;
+
+    if (name === "Size") {
+      this.setState({ size: value });
+    }
+    if (name === "Color") {
+      this.setState({ color: value });
+    }
+    if (name === "Capacity") {
+      this.setState({ capacity: value });
+    }
+  };
+
   render() {
     const { inStock, attributes } = this.props.product;
-    const onAttributesClick = this.props.onAttributesClick;
     return attributes.map((attr) => {
       return (
         <div key={attr.name} className={s.attributes}>
@@ -14,7 +40,7 @@ class ProductAttributes extends PureComponent {
               return (
                 <div key={item.value} className={s.attributesForm}>
                   <input
-                    onChange={() => onAttributesClick(item.id)}
+                    onChange={this.attrs}
                     className={s.attrButton}
                     id={item.id}
                     type="radio"

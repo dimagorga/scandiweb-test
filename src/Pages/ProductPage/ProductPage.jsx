@@ -36,13 +36,10 @@ class ProductPage extends Component {
     });
   };
 
-  setActiveAttribute = (id) => {
-    const { selectedAtribute } = this.state;
-    this.setState((prev) => {
-      if (!selectedAtribute.includes(id)) {
-        return { ...prev, selectedAtribute: [...prev.selectedAtribute, id] };
-      }
-    });
+  setActiveAttribute = (attrs) => {
+    const filtered = attrs.filter((attr) => attr !== "");
+
+    this.setState({ selectedAtribute: [...filtered] });
   };
 
   onSubmitProduct = (e) => {

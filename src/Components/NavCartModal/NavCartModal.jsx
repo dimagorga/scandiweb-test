@@ -68,7 +68,10 @@ class NavCartModal extends Component {
                             {item.attributes.map((attr) => (
                               <p
                                 key={attr}
-                                style={{ backgroundColor: attr }}
+                                style={{
+                                  backgroundColor: attr,
+                                  fontSize: attr.length > 5 && 0,
+                                }}
                                 className={s.itemAttrs}
                               >
                                 {attr}
