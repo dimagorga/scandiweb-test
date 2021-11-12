@@ -8,6 +8,7 @@ class ProductAttributes extends PureComponent {
     capacity: "",
     attrs: [],
   };
+  //no idea how i can make it correctly
 
   componentDidUpdate() {
     const { color, size, capacity } = this.state;
