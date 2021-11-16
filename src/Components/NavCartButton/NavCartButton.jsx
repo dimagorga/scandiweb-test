@@ -1,10 +1,10 @@
-import { Component } from "react";
+import { PureComponent } from "react";
 import { connect } from "react-redux";
 import { ReactComponent as CartIcon } from "../../Images/cartIcon.svg";
 import NavCartModal from "../NavCartModal/NavCartModal";
 import s from "./NavCartButton.module.css";
 
-class NavCartButton extends Component {
+class NavCartButton extends PureComponent {
   state = {
     showModal: false,
   };

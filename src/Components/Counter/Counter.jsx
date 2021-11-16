@@ -1,4 +1,4 @@
-import { Component } from "react";
+import { PureComponent } from "react";
 import { connect } from "react-redux";
 import {
   incrementValue,
@@ -7,7 +7,7 @@ import {
 } from "../../redux/product/product-actions";
 import s from "./Counter.module.css";
 
-class Counter extends Component {
+class Counter extends PureComponent {
   increment = (e) => {
     if (e.target.id === this.props.id) {
       return this.props.increment(1, this.props.id);

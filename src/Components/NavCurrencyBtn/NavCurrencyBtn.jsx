@@ -1,11 +1,11 @@
-import { Component } from "react";
+import { PureComponent } from "react";
 import { Query } from "react-apollo";
 import { connect } from "react-redux";
 import { changeCurrency } from "../../redux/product/currencies-action";
 import { currenciesRequest } from "../../services/gql-requests";
 import s from "./NavCurrencyBtn.module.css";
 
-class NavCurrencyBtn extends Component {
+class NavCurrencyBtn extends PureComponent {
   state = {
     showModal: false,
   };

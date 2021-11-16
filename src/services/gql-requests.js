@@ -6,6 +6,9 @@ const allProductsRequest = () => gql`
       name
       products {
         id
+        attributes {
+          name
+        }
         name
         inStock
         gallery
@@ -24,6 +27,9 @@ const productsCategoriesRequest = () => gql`
       name
       products {
         id
+        attributes {
+          name
+        }
         name
         inStock
         gallery

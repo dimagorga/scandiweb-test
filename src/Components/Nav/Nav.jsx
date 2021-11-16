@@ -21,6 +21,7 @@ class Nav extends PureComponent {
           if (loading) return <p>Loading...</p>;
           if (error) return <p>Error : </p>;
           const { category, categories } = data;
+
           return (
             <div className={s.wrapper}>
               <ul className={s.list}>

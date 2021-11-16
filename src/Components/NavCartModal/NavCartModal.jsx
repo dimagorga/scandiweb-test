@@ -1,17 +1,17 @@
-import { Component } from "react";
+import { PureComponent } from "react";
 import { createPortal } from "react-dom";
 import { connect } from "react-redux";
 import { Query } from "react-apollo";
 import { v4 as uuidv4 } from "uuid";
 import s from "./NavCartModal.module.css";
-import Counter from "../Counter/Counter";
 import ModalButtons from "../ModalButtons/ModalButtons";
 import TotalCounter from "../TotalCounter/TotalCounter";
 import { productAttributesRequest } from "../../services/gql-requests";
+import NavCartItem from "../NavCartItem/NavCartItem";
 
 const modalRoot = document.querySelector("#modal-root");
 
-class NavCartModal extends Component {
+class NavCartModal extends PureComponent {
   state = {
     total: 0,
   };
@@ -51,44 +51,11 @@ class NavCartModal extends Component {
                   const { product } = data;
                   return (
                     product && (
-                      <div className={s.miniCard}>
-                        <div className={s.leftSide}>
-                          <p className={s.itemName}>{product.name}</p>
-                          <p className={s.itemPrice}>
-                            {product.prices.map(
-                              (cur) =>
-                                cur.currency === currencies &&
-                                `${cur.currency} ${
-                                  Math.round(cur.amount * item.value * 100) /
-                                  100
-                                }`
-                            )}
-                          </p>
-                          <div className={s.attributes}>
-                            {item.attributes.map((attr) => (
-                              <p
-                                key={attr}
-                                style={{
-                                  backgroundColor: attr,
-                                  fontSize: attr.length > 5 && 0,
-                                }}
-                                className={s.itemAttrs}
-                              >
-                                {attr}
-                              </p>
-                            ))}
-                          </div>
-                        </div>
-
-                        <div className={s.rightSide}>
-                          <Counter id={item.id} value={item.value} />
-                          <img
-                            className={s.itemImage}
-                            src={product.gallery[0]}
-                            alt={product.name}
-                          />
-                        </div>
-                      </div>
+                      <NavCartItem
+                        product={product}
+                        currencies={currencies}
+                        item={item}
+                      />
                     )
                   );
                 }}

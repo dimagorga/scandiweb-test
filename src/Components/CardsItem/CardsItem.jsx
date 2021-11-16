@@ -1,13 +1,34 @@
 import { Link, withRouter } from "react-router-dom";
 import s from "./CardsItem.module.css";
 import { PureComponent } from "react";
-import addToCartIcon from "../../Images/addToCartIcon.png";
+import { v4 as uuidv4 } from "uuid";
 import { connect } from "react-redux";
 import { changeCurrency } from "../../redux/product/currencies-action";
+import { addProduct } from "../../redux/product/product-actions";
+import CardButton from "../CardButton/CardButton";
 
 class CardsItem extends PureComponent {
+  onBtnClick = (e) => {
+    console.log(e.target);
+  };
+
+  onBtnRedirect = (item) => {
+    this.props.history.push(`/products/${item.id}`);
+  };
+
+  onCartBtnClick = (e) => {
+    e.preventDefault();
+    this.props.onSubmit({
+      id: uuidv4(),
+      name: e.target.id,
+      attributes: [],
+      value: 1,
+    });
+  };
+
   render() {
-    const { item, onCartBtnClick, currencies, location } = this.props;
+    const { item, currencies, location } = this.props;
+
     return (
       <li className={s.item}>
         <Link
@@ -29,9 +50,14 @@ class CardsItem extends PureComponent {
           </p>
         </Link>
         {item.inStock && (
-          <button onClick={onCartBtnClick} className={s.btn} type="submit">
-            <img id={item.id} src={addToCartIcon} alt="addToCartIcon" />
-          </button>
+          <CardButton
+            item={item}
+            onBtnClick={
+              item.attributes.length === 0
+                ? this.onCartBtnClick
+                : () => this.onBtnRedirect(item)
+            }
+          />
         )}
       </li>
     );
@@ -43,6 +69,7 @@ const mapStateToProps = (state) => ({
 });
 const mapDispathcToProps = (dispatch) => ({
   onChangeCurrency: (currency) => dispatch(changeCurrency(currency)),
+  onSubmit: (product) => dispatch(addProduct(product)),
 });
 
 export default connect(

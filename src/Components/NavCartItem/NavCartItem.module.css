@@ -1,0 +1,56 @@
+.miniCard {
+  display: flex;
+  justify-content: space-between;
+  height: 137px;
+  color: #1d1f22;
+  margin-bottom: 40px;
+}
+
+.leftSide {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.itemName {
+  font-family: Raleway;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 160%;
+}
+
+.itemPrice {
+  font-family: Raleway;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 160%;
+}
+
+.attributes {
+  display: flex;
+}
+
+.itemAttrs {
+  margin-right: 5px;
+  min-width: 24px;
+  padding: 3px;
+  height: 24px;
+  font-family: Source Sans Pro;
+  text-align: center;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 160%;
+  border: 1px solid #1d1f22;
+}
+
+.rightSide {
+  display: flex;
+}
+
+.itemImage {
+  display: block;
+  width: 105px;
+  height: 137px;
+  object-fit: contain;
+  margin-left: 10px;
+}

@@ -53,23 +53,6 @@
   opacity: 0.5;
 }
 
-.btn {
-  position: absolute;
-  top: 320px;
-  right: 31px;
-  background-color: transparent;
-  border: none;
-  visibility: hidden;
-  cursor: pointer;
-}
-
-.item:hover .btn {
-  visibility: visible;
-}
-.btn :active {
-  border: 1px solid transparent;
-}
-
 .itemName {
   font-weight: 300;
   font-size: 18px;

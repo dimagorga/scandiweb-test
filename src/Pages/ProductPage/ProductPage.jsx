@@ -1,4 +1,4 @@
-import { Component } from "react";
+import { PureComponent } from "react";
 import { Query } from "react-apollo";
 import parse from "html-react-parser";
 import { connect } from "react-redux";
@@ -9,7 +9,7 @@ import { productRequest } from "../../services/gql-requests";
 import ProductAttributes from "../../Components/ProductAttributes/ProductAttributes";
 import ProductImages from "../../Components/ProductImages/ProductImages";
 
-class ProductPage extends Component {
+class ProductPage extends PureComponent {
   state = {
     productId: "",
     selectImage: null,
